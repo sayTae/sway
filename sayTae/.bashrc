@@ -30,7 +30,6 @@ alias grep='grep --color=auto'
 # packages
 alias vi='nvim'
 alias ff='fzf_vi'
-alias blue='bluetuith'
 alias nf='fastfetch -c neofetch'
 
 # iwctl

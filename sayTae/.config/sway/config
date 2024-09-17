@@ -4,7 +4,8 @@
 #
 # Read `man 5 sway` for a complete reference.
 
-font pango: SourceCodePro Medium 11
+font pango: Hiragino Kaku Gothic Pro 11
+# font pango: SourceCodePro Medium 11
 
 # display gap
 gaps inner 10px
@@ -22,11 +23,6 @@ set $workspace8 "八"
 set $workspace9 "九"
 
 ### Input configuration
-output eDP-1 disable
-workspace $workspace1 output HDMI-A-1
-workspace $workspace2 output HDMI-A-1
-workspace $workspace3 output HDMI-A-1
-workspace $workspace4 output HDMI-A-1
 
 # input delay
 input * repeat_delay 180
@@ -66,7 +62,7 @@ set $screenshot grim -g "$(slurp)" - | swappy -f -
 # set $screenshot grim -g "$(slurp)" - | wl-copy 
 
 # Screen lock (waylock)
-set $screenlock swaylock --color 000000
+set $screenlock swaylock --image /usr/share/backgrounds/downloads/core.jpg
 
 ### Floating App
 # mpv
@@ -79,18 +75,46 @@ for_window [app_id="org.fcitx.fcitx5-config-qt"] floating enable
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 # blueman
 for_window [app_id="blueman-manager"] floating enable
+# nautilus
+for_window [app_id="org.gnome.Nautilus"] floating enable
 # anki
 for_window [app_id="anki"] floating enable
 
 ### Output configuration
 #
+output eDP-1 resolution 1920x1080 scale 1 position 2190 0
+output HDMI-A-1 resolution 3840x2160 scale 1.75 position 0 0
+
+# Workspace setting
+workspace $workspace1 output HDMI-A-1
+workspace $workspace2 output HDMI-A-1
+workspace $workspace3 output HDMI-A-1
+workspace $workspace4 output HDMI-A-1
+workspace $workspace5 output HDMI-A-1
+workspace $workspace6 output HDMI-A-1
+workspace $workspace7 output HDMI-A-1
+workspace $workspace8 output HDMI-A-1
+workspace $workspace9 output HDMI-A-1
+
+# Only 1 monitor set
+# output eDP-1 disable
+
 # focused
 # client.focused #285577 #285577 #ffffff #4A773C
 # client.unfocused #3C3C3C #3C3C3C #ffffff #285577
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/downloads/sunflower.jpg fill
-# output * bg "#2F4F4F" solid_color
+#
+# Set wallpaper
+output eDP-1 bg /usr/share/backgrounds/downloads/MacOS.jpg fill
+output HDMI-A-1 bg /usr/share/backgrounds/downloads/MacOS.jpg fill
+
+# Teal color
+# output * bg "#008080" solid_color
+
+# Gray color
+# output * bg "#646464" solid_color
+
 #
 # Example configuration:
 #
@@ -148,6 +172,10 @@ output * bg /usr/share/backgrounds/downloads/sunflower.jpg fill
 	bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -4%
 	bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
+	# Set Monitor brightness
+	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 10%+
+	bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%-
+
 	# Start sceen lock
 	# bindsym $mod+m swaylock --color 000000
 
@@ -190,8 +218,6 @@ output * bg /usr/share/backgrounds/downloads/sunflower.jpg fill
 #
 # Workspaces:
 #
-
-
 	# Switch to workspace
 	bindsym $mod+1 workspace $workspace1
 	bindsym $mod+2 workspace $workspace2
@@ -237,10 +263,10 @@ output * bg /usr/share/backgrounds/downloads/sunflower.jpg fill
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+a focus mode_toggle
 
     # Move focus to the parent container
-    bindsym $mod+a focus parent
+    bindsym $mod+space focus parent
 #
 # Scratchpad:
 #
