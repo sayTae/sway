@@ -75,10 +75,8 @@ button:hover {
 }
 
 #mode {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+   background: rgba(225, 195, 55, 1);
 }
-
 #clock,
 #battery,
 #cpu,
@@ -272,20 +270,21 @@ label:focus {
 }
 
 #mpd {
-    background-color: #66cc99;
-    color: #2a5c45;
+    /* background-color: #66cc99; */
+    /* color: #2a5c45; */
+    color: #ffffff;
 }
 
 #mpd.disconnected {
-    background-color: #f53c3c;
+    /* background-color: #f53c3c; */
 }
 
 #mpd.stopped {
-    background-color: #90b1b1;
+    /* background-color: #90b1b1; */
 }
 
 #mpd.paused {
-    background-color: #51a37a;
+    /* background-color: #51a37a; */
 }
 
 #language {
@@ -312,8 +311,12 @@ label:focus {
     background: rgba(0, 0, 0, 0.2);
 }
 
+/* #scratchpad { */
+/*     background: rgba(124, 182, 163, 1); */
+/* } */
+
 #scratchpad {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(96, 194, 145, 1);
 }
 
 #scratchpad.empty {

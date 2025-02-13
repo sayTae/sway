@@ -5,30 +5,16 @@
 # Read `man 5 sway` for a complete reference.
 
 font pango: Hiragino Kaku Gothic Pro 11
-# font pango: SourceCodePro Medium 11
 
 # display gap
 gaps inner 10px
 gaps outer 0px
 
-# Set workspace
-set $workspace1 "一"
-set $workspace2 "二"
-set $workspace3 "三"
-set $workspace4 "四"
-set $workspace5 "五"
-set $workspace6 "六"
-set $workspace7 "七"
-set $workspace8 "八"
-set $workspace9 "九"
-
-### Input configuration
-
-# input delay
+# Input delay
 input * repeat_delay 180
 input * repeat_rate 50
 
-# swap caps:ctrl
+# Swap caps:ctrl
 input "type:keyboard" xkb_options ctrl:swapcaps
 
 # mouse pointer
@@ -48,21 +34,18 @@ set $right l
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 
-# fcitx5
-exec --no-startup-id fcitx5 -d
-
 # terminal emulator
-set $term foot
+set $term kitty
 
 # Application munu
 set $menu wofi --show
 
-# Take a screenshot (drag)
-set $screenshot grim -g "$(slurp)" - | swappy -f -
-# set $screenshot grim -g "$(slurp)" - | wl-copy 
+# fcitx5
+exec --no-startup-id fcitx5 -d
 
-# Screen lock (waylock)
-set $screenlock swaylock --image /usr/share/backgrounds/downloads/core.jpg
+# Take a screenshot & copy (drag)
+set $screencopy grim -g "$(slurp)" - | wl-copy 
+set $screenshot grim -g "$(slurp)" - | swappy -f -
 
 ### Floating App
 # mpv
@@ -80,21 +63,19 @@ for_window [app_id="org.gnome.Nautilus"] floating enable
 # anki
 for_window [app_id="anki"] floating enable
 
+## Transparency App
+# Native wayland
+# for_window [app_id=".*"] opacity 0.96
+# Xwayland (X11) 
+# for_window [instance=".*"] opacity 0.96
+
 ### Output configuration
 #
-output eDP-1 resolution 1920x1080 scale 1 position 2190 0
-output HDMI-A-1 resolution 3840x2160 scale 1.75 position 0 0
+output HDMI-A-1 resolution 3840x2160@60Hz scale 1.75 position 0 0
+# output HDMI-A-1 resolution 3840x2160@60Hz scale 1.75 position 0 0 transform 270
 
-# Workspace setting
-workspace $workspace1 output HDMI-A-1
-workspace $workspace2 output HDMI-A-1
-workspace $workspace3 output HDMI-A-1
-workspace $workspace4 output HDMI-A-1
-workspace $workspace5 output HDMI-A-1
-workspace $workspace6 output HDMI-A-1
-workspace $workspace7 output HDMI-A-1
-workspace $workspace8 output HDMI-A-1
-workspace $workspace9 output HDMI-A-1
+# Startup workspace
+exec swaymsg workspace '一'
 
 # Only 1 monitor set
 # output eDP-1 disable
@@ -106,8 +87,33 @@ workspace $workspace9 output HDMI-A-1
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #
 # Set wallpaper
-output eDP-1 bg /usr/share/backgrounds/downloads/MacOS.jpg fill
-output HDMI-A-1 bg /usr/share/backgrounds/downloads/MacOS.jpg fill
+set $wall0 /usr/share/backgrounds/downloads/core.jpg
+set $wall1 /usr/share/backgrounds/downloads/heya.jpeg
+set $wall2 /usr/share/backgrounds/downloads/japan.jpg
+set $wall3 /usr/share/backgrounds/downloads/MacOS.jpg
+set $wall4 /usr/share/backgrounds/downloads/windowLinux.png
+set $wall5 #626D58
+
+# Wallpaper mode
+bindsym $mod+Shift+w mode "wallpaper"
+
+mode "wallpaper" {
+     bindsym 1 output HDMI-A-1 bg $wall1 fill; mode "default"
+     bindsym 2 output HDMI-A-1 bg $wall2 fill; mode "default"
+     bindsym 3 output HDMI-A-1 bg $wall3 fill; mode "default"
+     bindsym 4 output HDMI-A-1 bg $wall4 fill; mode "default"
+     bindsym 5 output HDMI-A-1 bg $wall5 solid_color; mode "default"
+     
+     # Escape mode
+     bindsym Escape mode "default"
+     bindsym Return mode "default"
+}
+
+output HDMI-A-1 bg $wall1 fill
+# output HDMI-A-1 bg $wall5 solid_color
+
+# Screen lock (waylock)
+set $screenlock swaylock --image $wall0
 
 # Teal color
 # output * bg "#008080" solid_color
@@ -162,14 +168,15 @@ output HDMI-A-1 bg /usr/share/backgrounds/downloads/MacOS.jpg fill
     bindsym $mod+d exec $menu
 
 	# Take a screen
-	bindsym $mod+Shift+s exec $screenshot 
+	bindsym $mod+Shift+a exec $screenshot
+	bindsym $mod+Shift+s exec $screencopy
 
 	# Screen locked
 	bindsym $mod+backslash exec $screenlock
 
 	# Set volume
-	bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +4%
-	bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -4%
+	bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 	bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 	# Set Monitor brightness
@@ -218,27 +225,41 @@ output HDMI-A-1 bg /usr/share/backgrounds/downloads/MacOS.jpg fill
 #
 # Workspaces:
 #
+	# Workspace setting
+	workspace '一' output HDMI-A-1
+	workspace '二' output HDMI-A-1
+	workspace '三' output HDMI-A-1
+	workspace '四' output HDMI-A-1
+	workspace '五' output HDMI-A-1
+	workspace '六' output HDMI-A-1
+	workspace '七' output HDMI-A-1
+	workspace '八' output HDMI-A-1
+	workspace '九' output HDMI-A-1
+	workspace '和' output HDMI-A-1
+
 	# Switch to workspace
-	bindsym $mod+1 workspace $workspace1
-	bindsym $mod+2 workspace $workspace2
-	bindsym $mod+3 workspace $workspace3
-	bindsym $mod+4 workspace $workspace4
-	bindsym $mod+5 workspace $workspace5
-	bindsym $mod+6 workspace $workspace6
-	bindsym $mod+7 workspace $workspace7
-	bindsym $mod+8 workspace $workspace8
-	bindsym $mod+9 workspace $workspace9
+	bindsym $mod+1 workspace '一'
+	bindsym $mod+2 workspace '二'
+	bindsym $mod+3 workspace '三'
+	bindsym $mod+4 workspace '四'
+	bindsym $mod+5 workspace '五'
+	bindsym $mod+6 workspace '六'
+	bindsym $mod+7 workspace '七'
+	bindsym $mod+8 workspace '八'
+	bindsym $mod+9 workspace '九'
+	bindsym $mod+0 workspace '和'
 
 	# Move focused container to workspace
-	bindsym $mod+Shift+1 move container to workspace $workspace1
-	bindsym $mod+Shift+2 move container to workspace $workspace2
-	bindsym $mod+Shift+3 move container to workspace $workspace3
-	bindsym $mod+Shift+4 move container to workspace $workspace4
-	bindsym $mod+Shift+5 move container to workspace $workspace5
-	bindsym $mod+Shift+6 move container to workspace $workspace6
-	bindsym $mod+Shift+7 move container to workspace $workspace7
-	bindsym $mod+Shift+8 move container to workspace $workspace8
-	bindsym $mod+Shift+9 move container to workspace $workspace9
+	bindsym $mod+Shift+1 move container to workspace '一'
+	bindsym $mod+Shift+2 move container to workspace '二'
+	bindsym $mod+Shift+3 move container to workspace '三'
+	bindsym $mod+Shift+4 move container to workspace '四'
+	bindsym $mod+Shift+5 move container to workspace '五'
+	bindsym $mod+Shift+6 move container to workspace '六'
+	bindsym $mod+Shift+7 move container to workspace '七'
+	bindsym $mod+Shift+8 move container to workspace '八'
+	bindsym $mod+Shift+9 move container to workspace '九'
+	bindsym $mod+Shift+0 move container to workspace '和'
 
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.

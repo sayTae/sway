@@ -9,13 +9,15 @@ EnumerateBackwardKeys=
 EnumerateSkipFirst=False
 
 [Hotkey/TriggerKeys]
-0=Control+space
+0=Shift+space
+1=Launch5
 
 [Hotkey/AltTriggerKeys]
 0=Shift_L
 
 [Hotkey/EnumerateGroupForwardKeys]
-0=Shift+space
+0=Control+space
+1=Launch6
 
 [Hotkey/EnumerateGroupBackwardKeys]
 0=Shift+Super+space
