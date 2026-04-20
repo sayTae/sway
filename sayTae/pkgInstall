@@ -1,0 +1,2 @@
+
+sudo pacman -S sway foot i3status-rust noto-fonts-cjk otf-font-awesome fcitx5 wofi ranger btop bc bat ncdu neovim git jq zip unzip ripgrep wl-clipboard openssh zathura zathura-pdf-mupdf lsd imv mpv meld mako grim slurp swappy swaybg swaylock termdown pipewire pavucontrol blueman bluez bluez-utils fastfetch

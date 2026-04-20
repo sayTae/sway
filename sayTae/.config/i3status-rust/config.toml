@@ -1,0 +1,67 @@
+icons_format = "{icon}"
+
+[theme]
+# theme = "slick"
+# theme = "plain"
+theme = "native"
+# theme = "modern"
+# theme = "gruvbox-dark"
+
+# ---------------- TIMER ----------------
+[[block]]
+block = "tea_timer"
+format = " 日本 {$minutes:$seconds |}"
+# format = "  {$minutes:$seconds |}"
+increment = 30
+done_cmd = "notify-send -t 3000 'お時間です。' && mpv --no-terminal ~/.bell.mp3"
+
+# ---------------- NETWORK ----------------
+[[block]]
+block = "net"
+format = " ▼ $speed_down.eng(p:M, w:4, hide_unit)  ▲ $speed_up.eng(p:M, w:4, hide_unit) "
+
+# ---------------- UPTIME----------------
+# [[block]]
+# block = "uptime"
+# interval = 60 # update every hour
+
+# ---------------- NETWORK ----------------
+# [[block]]
+# block = "net"
+# device = "enp4s0"
+# format = " 󰖩  $ip "
+# interval = 5
+
+# ---------------- CPU ----------------
+[[block]]
+block = "cpu"
+interval = 2
+format = "   $utilization "
+
+# ---------------- MEMORY ----------------
+[[block]]
+block = "memory"
+format = " 💾 $mem_used / $mem_total "
+
+# ---------------- TEMPERATURE ----------------
+[[block]]
+block = "temperature"
+interval = 5
+format = " 🌡 $average "
+
+# ---------------- SOUND ----------------
+[[block]]
+block = "sound"
+format = "    $volume "
+
+# ---------------- BATTERY ----------------
+# [[block]]
+# block = "battery"
+# driver = "upower"
+# format = "  $percentage "
+
+# ---------------- TIME ----------------
+[[block]]
+block = "custom"
+interval = 1
+command = "date '+󰃭  %m月%d日(%a)  %H時%M分%S秒'"

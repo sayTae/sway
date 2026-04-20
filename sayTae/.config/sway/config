@@ -4,11 +4,15 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+# Set font
 font pango: Hiragino Kaku Gothic Pro 11
 
 # display gap
-gaps inner 10px
+gaps inner 0px
 gaps outer 0px
+
+# Set border
+default_border pixel 2
 
 # Input delay
 input * repeat_delay 180
@@ -17,8 +21,11 @@ input * repeat_rate 50
 # Swap caps:ctrl
 input "type:keyboard" xkb_options ctrl:swapcaps
 
-# mouse pointer
-input "typepointer" accel_profile flat
+# touchpad
+input "type:touchpad" {
+	natural_scroll enabled
+	accel_profile flat
+}
 
 ### Variables
 
@@ -34,8 +41,14 @@ set $right l
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 
-# terminal emulator
-set $term kitty
+# Terminal server
+exec foot --server
+
+# Terminal emulator
+set $term footclient
+
+# Web browser
+set $browser zen-browser
 
 # Application munu
 set $menu wofi --show
@@ -43,15 +56,19 @@ set $menu wofi --show
 # fcitx5
 exec --no-startup-id fcitx5 -d
 
+# Notification
+exec mako
+
 # Take a screenshot & copy (drag)
 set $screencopy grim -g "$(slurp)" - | wl-copy 
 set $screenshot grim -g "$(slurp)" - | swappy -f -
 
 ### Floating App
-# mpv
-for_window [app_id="mpv"] floating enable
 # imv
 for_window [app_id="imv"] floating enable
+# mpv
+for_window [app_id="mpv"] resize set height 542 px
+# for_window [app_id="mpv"] resize set height 32 ppt
 # fcitx5
 for_window [app_id="org.fcitx.fcitx5-config-qt"] floating enable
 # pulseaudio
@@ -62,54 +79,55 @@ for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="org.gnome.Nautilus"] floating enable
 # anki
 for_window [app_id="anki"] floating enable
-
-## Transparency App
-# Native wayland
-# for_window [app_id=".*"] opacity 0.96
-# Xwayland (X11) 
-# for_window [instance=".*"] opacity 0.96
+# foot
+# for_window [app_id="foot"] floating enable
 
 ### Output configuration
 #
-output HDMI-A-1 resolution 3840x2160@60Hz scale 1.75 position 0 0
-# output HDMI-A-1 resolution 3840x2160@60Hz scale 1.75 position 0 0 transform 270
+
+# PC
+set $monitor HDMI-A-1
+output $monitor resolution 3840x2160@60Hz scale 2 position 0 0
+# output $monitor resolution 3840x2160@60Hz scale 2 position 0 0 transform 270
+
+# Notebook
+# set $monitor eDP-1
+# output $monitor resolution 1920x1080@60Hz scale 1 position 0 0
 
 # Startup workspace
-exec swaymsg workspace '一'
+exec swaymsg workspace 'ひ'
 
 # Only 1 monitor set
 # output eDP-1 disable
 
 # focused
+client.focused #FFFFFF #FFFFFF #000000 #FF4500
 # client.focused #285577 #285577 #ffffff #4A773C
 # client.unfocused #3C3C3C #3C3C3C #ffffff #285577
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #
 # Set wallpaper
-set $wall0 /usr/share/backgrounds/downloads/core.jpg
-set $wall1 /usr/share/backgrounds/downloads/heya.jpeg
-set $wall2 /usr/share/backgrounds/downloads/japan.jpg
-set $wall3 /usr/share/backgrounds/downloads/MacOS.jpg
-set $wall4 /usr/share/backgrounds/downloads/windowLinux.png
-set $wall5 #626D58
+# set $wall0 /usr/share/backgrounds/downloads/space.jpg
+set $wall0 /usr/share/backgrounds/downloads/uchuu.jpg
+set $wall1 /usr/share/backgrounds/downloads/jihanki.jpg
+set $wall2 /usr/share/backgrounds/downloads/aqua.jpg
+set $wall3 #121212
 
 # Wallpaper mode
 bindsym $mod+Shift+w mode "wallpaper"
 
 mode "wallpaper" {
-     bindsym 1 output HDMI-A-1 bg $wall1 fill; mode "default"
-     bindsym 2 output HDMI-A-1 bg $wall2 fill; mode "default"
-     bindsym 3 output HDMI-A-1 bg $wall3 fill; mode "default"
-     bindsym 4 output HDMI-A-1 bg $wall4 fill; mode "default"
-     bindsym 5 output HDMI-A-1 bg $wall5 solid_color; mode "default"
+     bindsym 1 output $monitor bg $wall1 fill; mode "default"
+     bindsym 2 output $monitor bg $wall2 fill; mode "default"
+     bindsym 3 output $monitor bg $wall3 solid_color; mode "default"
      
      # Escape mode
      bindsym Escape mode "default"
      bindsym Return mode "default"
 }
 
-output HDMI-A-1 bg $wall1 fill
+output $monitor bg $wall1 fill
 # output HDMI-A-1 bg $wall5 solid_color
 
 # Screen lock (waylock)
@@ -161,6 +179,9 @@ set $screenlock swaylock --image $wall0
     # Start a terminal
     bindsym $mod+Return exec $term
 
+	# Web browser
+    bindsym $mod+q exec $browser
+
     # Kill focused window
     bindsym $mod+Shift+q kill
 
@@ -172,7 +193,8 @@ set $screenlock swaylock --image $wall0
 	bindsym $mod+Shift+s exec $screencopy
 
 	# Screen locked
-	bindsym $mod+backslash exec $screenlock
+	bindsym $mod+Backspace exec $screenlock
+	# bindsym $mod+Backslash exec $screenlock
 
 	# Set volume
 	bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
@@ -226,40 +248,40 @@ set $screenlock swaylock --image $wall0
 # Workspaces:
 #
 	# Workspace setting
-	workspace '一' output HDMI-A-1
-	workspace '二' output HDMI-A-1
-	workspace '三' output HDMI-A-1
-	workspace '四' output HDMI-A-1
-	workspace '五' output HDMI-A-1
-	workspace '六' output HDMI-A-1
-	workspace '七' output HDMI-A-1
-	workspace '八' output HDMI-A-1
-	workspace '九' output HDMI-A-1
-	workspace '和' output HDMI-A-1
+	workspace 'ひ' output HDMI-A-1
+	workspace 'ふ' output HDMI-A-1
+	workspace 'み' output HDMI-A-1
+	workspace 'よ' output HDMI-A-1
+	workspace 'い' output HDMI-A-1
+	workspace 'む' output HDMI-A-1
+	workspace 'な' output HDMI-A-1
+	workspace 'や' output HDMI-A-1
+	workspace 'こ' output HDMI-A-1
+	workspace 'と' output HDMI-A-1
 
 	# Switch to workspace
-	bindsym $mod+1 workspace '一'
-	bindsym $mod+2 workspace '二'
-	bindsym $mod+3 workspace '三'
-	bindsym $mod+4 workspace '四'
-	bindsym $mod+5 workspace '五'
-	bindsym $mod+6 workspace '六'
-	bindsym $mod+7 workspace '七'
-	bindsym $mod+8 workspace '八'
-	bindsym $mod+9 workspace '九'
-	bindsym $mod+0 workspace '和'
+	bindsym $mod+1 workspace 'ひ'
+	bindsym $mod+2 workspace 'ふ'
+	bindsym $mod+3 workspace 'み'
+	bindsym $mod+4 workspace 'よ'
+	bindsym $mod+5 workspace 'い'
+	bindsym $mod+6 workspace 'む'
+	bindsym $mod+7 workspace 'な'
+	bindsym $mod+8 workspace 'や'
+	bindsym $mod+9 workspace 'こ'
+	bindsym $mod+0 workspace 'と'
 
 	# Move focused container to workspace
-	bindsym $mod+Shift+1 move container to workspace '一'
-	bindsym $mod+Shift+2 move container to workspace '二'
-	bindsym $mod+Shift+3 move container to workspace '三'
-	bindsym $mod+Shift+4 move container to workspace '四'
-	bindsym $mod+Shift+5 move container to workspace '五'
-	bindsym $mod+Shift+6 move container to workspace '六'
-	bindsym $mod+Shift+7 move container to workspace '七'
-	bindsym $mod+Shift+8 move container to workspace '八'
-	bindsym $mod+Shift+9 move container to workspace '九'
-	bindsym $mod+Shift+0 move container to workspace '和'
+	bindsym $mod+Shift+1 move container to workspace 'ひ'
+	bindsym $mod+Shift+2 move container to workspace 'ふ'
+	bindsym $mod+Shift+3 move container to workspace 'み'
+	bindsym $mod+Shift+4 move container to workspace 'よ'
+	bindsym $mod+Shift+5 move container to workspace 'い'
+	bindsym $mod+Shift+6 move container to workspace 'む'
+	bindsym $mod+Shift+7 move container to workspace 'な'
+	bindsym $mod+Shift+8 move container to workspace 'や'
+	bindsym $mod+Shift+9 move container to workspace 'こ'
+	bindsym $mod+Shift+0 move container to workspace 'と'
 
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
@@ -308,16 +330,16 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    bindsym $right resize shrink width 10px
+    bindsym $up resize grow height 10px
+    bindsym $down resize shrink height 10px
+    bindsym $left resize grow width 10px
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+    bindsym Right resize shrink width 10px
+    bindsym Up resize grow height 10px
+    bindsym Down resize shrink height 10px
+    bindsym Left resize grow width 10px
 
     # Return to default mode
     bindsym Return mode "default"
@@ -329,22 +351,21 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-	swaybar_command waybar
-}
-
 # bar {
 #     position top
 
-#     # When the status_command prints a new line to stdout, swaybar updates.
-#     # The default just shows the current date and time.
-#     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+bar {
+    position top
+	status_command i3status-rs
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    # status_command while date +'%Y-%m-%d %X'; do sleep 1; done
 
-#     colors {
-#         statusline #ffffff
-#         background #323232
-#         inactive_workspace #32323200 #32323200 #5c5c5c
-#     }
-# }
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
 
 include /etc/sway/config.d/*
