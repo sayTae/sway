@@ -1,0 +1,16 @@
+#!/bin/bash
+
+sudo pacman -S --needed \
+    sway swaybg swaylock mako grim slurp swappy \
+    foot lsd bat jq ripgrep zip unzip fzf git bc termdown \
+    wofi ranger ncdu btop fastfetch neofetch \
+    fcitx5 fcitx5-hangul fcitx5-mozc \
+    noto-fonts-cjk otf-font-awesome imv \
+    mpv zathura zathura-pdf-mupdf meld \
+    neovim npm \
+    pipewire pavucontrol bluez bluez-utils blueman openssh \
+    i3status-rust wl-clipboard
+
+sudo mv ./issue /etc
+sudo mv ./cls /usr/bin
+sudo mv ./jisin /usr/bin

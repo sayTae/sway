@@ -1,9 +1,9 @@
 icons_format = "{icon}"
 
 [theme]
+theme = "native"
 # theme = "slick"
 # theme = "plain"
-theme = "native"
 # theme = "modern"
 # theme = "gruvbox-dark"
 
@@ -20,17 +20,22 @@ done_cmd = "notify-send -t 3000 'お時間です。' && mpv --no-terminal ~/.bel
 block = "net"
 format = " ▼ $speed_down.eng(p:M, w:4, hide_unit)  ▲ $speed_up.eng(p:M, w:4, hide_unit) "
 
+# ---------------- NETWORK ----------------
+[[block]]
+block = "net"
+device = "wlan0"
+format = " 󰖩  $ssid ($icon) "
+
+# ---------------- IP ----------------
+[[block]]
+block = "net"
+device = "wlan0"
+format = " $ip ($signal_strength) "
+
 # ---------------- UPTIME----------------
 # [[block]]
 # block = "uptime"
 # interval = 60 # update every hour
-
-# ---------------- NETWORK ----------------
-# [[block]]
-# block = "net"
-# device = "enp4s0"
-# format = " 󰖩  $ip "
-# interval = 5
 
 # ---------------- CPU ----------------
 [[block]]
@@ -57,7 +62,7 @@ format = "    $volume "
 # ---------------- BATTERY ----------------
 # [[block]]
 # block = "battery"
-# driver = "upower"
+# driver = "sysfs"
 # format = "  $percentage "
 
 # ---------------- TIME ----------------
