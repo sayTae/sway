@@ -19,9 +19,13 @@ input * repeat_delay 180
 input * repeat_rate 50
 
 # Swap caps:ctrl
-input "type:keyboard" xkb_options ctrl:swapcaps
+input "type:keyboard" {
+    # xkb_model jp106
+    # xkb_layout jp
+	xkb_options ctrl:swapcaps
+}
 
-# touchpad
+# mouse pointer
 input "type:touchpad" {
 	natural_scroll enabled
 	accel_profile flat
@@ -30,7 +34,7 @@ input "type:touchpad" {
 ### Variables
 
 # Logo key. Use Mod1 for Alt.
-set $mod Mod1
+set $mod Mod4
 
 # Home row direction keys, like vim
 set $left h
@@ -40,9 +44,6 @@ set $right l
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
-
-# Terminal server
-exec foot --server
 
 # Terminal emulator
 set $term footclient
@@ -85,14 +86,13 @@ for_window [app_id="anki"] floating enable
 ### Output configuration
 #
 
-# PC
-set $monitor HDMI-A-1
-output $monitor resolution 3840x2160@60Hz scale 2 position 0 0
-# output $monitor resolution 3840x2160@60Hz scale 2 position 0 0 transform 270
+set $monitor eDP-1
+output $monitor resolution 1920x1080@60Hz scale 1.2 position 0 0
+# output eDP-1 disable
 
-# Notebook
-# set $monitor eDP-1
-# output $monitor resolution 1920x1080@60Hz scale 1 position 0 0
+# set $monitor HDMI-A-1
+# output $monitor resolution 3840x2160@60Hz scale 2 position 0 0
+# output $monitor resolution 3840x2160@60Hz scale 2 position 0 0 transform 270
 
 # Startup workspace
 exec swaymsg workspace 'ひ'
@@ -108,7 +108,6 @@ client.focused #FFFFFF #FFFFFF #000000 #FF4500
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #
 # Set wallpaper
-# set $wall0 /usr/share/backgrounds/downloads/space.jpg
 set $wall0 /usr/share/backgrounds/downloads/uchuu.jpg
 set $wall1 /usr/share/backgrounds/downloads/jihanki.jpg
 set $wall2 /usr/share/backgrounds/downloads/aqua.jpg
@@ -187,6 +186,7 @@ set $screenlock swaylock --image $wall0
 
     # Start your launcher
     bindsym $mod+d exec $menu
+    # bindsym Menu exec $menu
 
 	# Take a screen
 	bindsym $mod+Shift+a exec $screenshot
@@ -197,9 +197,12 @@ set $screenlock swaylock --image $wall0
 	# bindsym $mod+Backslash exec $screenlock
 
 	# Set volume
-	bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
-	bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-	bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+	bindsym $mod+F12 exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	bindsym $mod+F11 exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+	bindsym $mod+F10 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+	# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+	# bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 	# Set Monitor brightness
 	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 10%+
