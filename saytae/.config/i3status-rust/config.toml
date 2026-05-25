@@ -57,13 +57,13 @@ format = " 🌡 $average "
 # ---------------- SOUND ----------------
 [[block]]
 block = "sound"
-format = "    $volume "
+format = " 🔊 $volume "
 
 # ---------------- BATTERY ----------------
-# [[block]]
-# block = "battery"
-# driver = "sysfs"
-# format = "  $percentage "
+[[block]]
+block = "battery"
+driver = "sysfs"
+format = "  $percentage "
 
 # ---------------- TIME ----------------
 [[block]]

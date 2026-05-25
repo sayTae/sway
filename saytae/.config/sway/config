@@ -20,8 +20,8 @@ input * repeat_rate 50
 
 # Swap caps:ctrl
 input "type:keyboard" {
-    # xkb_model jp106
-    # xkb_layout jp
+    xkb_model jp106
+    xkb_layout jp
 	xkb_options ctrl:swapcaps
 }
 
@@ -44,6 +44,9 @@ set $right l
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
+
+# Terminal server
+exec foot --server
 
 # Terminal emulator
 set $term footclient
@@ -84,21 +87,10 @@ for_window [app_id="anki"] floating enable
 # for_window [app_id="foot"] floating enable
 
 ### Output configuration
-#
-
-set $monitor eDP-1
-output $monitor resolution 1920x1080@60Hz scale 1.2 position 0 0
-# output eDP-1 disable
-
-# set $monitor HDMI-A-1
-# output $monitor resolution 3840x2160@60Hz scale 2 position 0 0
-# output $monitor resolution 3840x2160@60Hz scale 2 position 0 0 transform 270
+exec kanshi
 
 # Startup workspace
 exec swaymsg workspace 'ひ'
-
-# Only 1 monitor set
-# output eDP-1 disable
 
 # focused
 client.focused #FFFFFF #FFFFFF #000000 #FF4500
@@ -117,16 +109,16 @@ set $wall3 #121212
 bindsym $mod+Shift+w mode "wallpaper"
 
 mode "wallpaper" {
-     bindsym 1 output $monitor bg $wall1 fill; mode "default"
-     bindsym 2 output $monitor bg $wall2 fill; mode "default"
-     bindsym 3 output $monitor bg $wall3 solid_color; mode "default"
+     bindsym 1 output * bg $wall1 fill; mode "default"
+     bindsym 2 output * bg $wall2 fill; mode "default"
+     bindsym 3 output * bg $wall3 solid_color; mode "default"
      
      # Escape mode
      bindsym Escape mode "default"
      bindsym Return mode "default"
 }
 
-output $monitor bg $wall1 fill
+output * bg $wall1 fill
 # output HDMI-A-1 bg $wall5 solid_color
 
 # Screen lock (waylock)
@@ -185,24 +177,25 @@ set $screenlock swaylock --image $wall0
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
-    # bindsym Menu exec $menu
+    bindsym Menu exec $menu
 
 	# Take a screen
 	bindsym $mod+Shift+a exec $screenshot
 	bindsym $mod+Shift+s exec $screencopy
+	bindsym Print exec $screencopy
+	bindsym Shift+Print exec $screenshot
 
 	# Screen locked
-	bindsym $mod+Backspace exec $screenlock
-	# bindsym $mod+Backslash exec $screenlock
+	# Bindsym $mod+Backspace exec $screenlock
+	bindsym Pause exec $screenlock
 
 	# Set volume
-	bindsym $mod+F12 exec pactl set-sink-volume @DEFAULT_SINK@ +1%
-	bindsym $mod+F11 exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-	bindsym $mod+F10 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-	# bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
-	# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-	# bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+	bindsym $mod+Asciicircum exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	bindsym $mod+Minus exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+	bindsym $mod+Backslash exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+	bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+	bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 	# Set Monitor brightness
 	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 10%+
@@ -320,11 +313,11 @@ set $screenlock swaylock --image $wall0
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $mod+Shift+Backspace move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+Backspace scratchpad show
 #
 # Resizing containers:
 #
