@@ -8,32 +8,34 @@
 font pango: Hiragino Kaku Gothic Pro 11
 
 # display gap
-gaps inner 0px
-gaps outer 0px
+gaps inner 0
+gaps outer 0
 
 # Set border
 default_border pixel 2
 
-# Input delay
-input * repeat_delay 180
-input * repeat_rate 50
-
-# Swap caps:ctrl
+# Keyboard
 input "type:keyboard" {
     xkb_model jp106
     xkb_layout jp
-	xkb_options ctrl:swapcaps
+    xkb_options ctrl:swapcaps
+    repeat_delay 180
+    repeat_rate 50
 }
 
-# mouse pointer
+# Mouse
 input "type:touchpad" {
-	natural_scroll enabled
-	accel_profile flat
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+    scroll_method edge
+    accel_profile flat
 }
 
 ### Variables
 
-# Logo key. Use Mod1 for Alt.
+# Mod key
 set $mod Mod4
 
 # Home row direction keys, like vim
@@ -48,11 +50,14 @@ set $right l
 # Terminal server
 exec foot --server
 
+#login
+exec $screenlock
+
 # Terminal emulator
 set $term footclient
 
 # Web browser
-set $browser zen-browser
+set $browser firefox
 
 # Application munu
 set $menu wofi --show
@@ -80,7 +85,7 @@ for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 # blueman
 for_window [app_id="blueman-manager"] floating enable
 # nautilus
-for_window [app_id="org.gnome.Nautilus"] floating enable
+for_window [app_id="pcmanfm"] floating enable
 # anki
 for_window [app_id="anki"] floating enable
 # foot
@@ -90,7 +95,7 @@ for_window [app_id="anki"] floating enable
 exec kanshi
 
 # Startup workspace
-exec swaymsg workspace 'ひ'
+exec swaymsg workspace '壱'
 
 # focused
 client.focused #FFFFFF #FFFFFF #000000 #FF4500
@@ -100,9 +105,9 @@ client.focused #FFFFFF #FFFFFF #000000 #FF4500
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #
 # Set wallpaper
-set $wall0 /usr/share/backgrounds/downloads/uchuu.jpg
+set $wall0 /usr/share/backgrounds/downloads/kame.jpg
 set $wall1 /usr/share/backgrounds/downloads/jihanki.jpg
-set $wall2 /usr/share/backgrounds/downloads/aqua.jpg
+set $wall2 /usr/share/backgrounds/downloads/windowLinux.jpg
 set $wall3 #121212
 
 # Wallpaper mode
@@ -124,11 +129,13 @@ output * bg $wall1 fill
 # Screen lock (waylock)
 set $screenlock swaylock --image $wall0
 
-# Teal color
-# output * bg "#008080" solid_color
+### Idle configuration
+#
+bindswitch --locked lid:on \
+	exec playerctl -a pause; exec pactl set-sink-mute @DEFAULT_SINK@ 1; exec $screenlock
 
-# Gray color
-# output * bg "#646464" solid_color
+bindswitch --locked lid:off \
+	exec pactl set-sink-mute @DEFAULT_SINK@ 0
 
 #
 # Example configuration:
@@ -198,8 +205,8 @@ set $screenlock swaylock --image $wall0
 	bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 	# Set Monitor brightness
-	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 10%+
-	bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 10%-
+	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
+	bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
 	# Start sceen lock
 	# bindsym $mod+m swaylock --color 000000
@@ -244,40 +251,40 @@ set $screenlock swaylock --image $wall0
 # Workspaces:
 #
 	# Workspace setting
-	workspace 'ひ' output HDMI-A-1
-	workspace 'ふ' output HDMI-A-1
-	workspace 'み' output HDMI-A-1
-	workspace 'よ' output HDMI-A-1
-	workspace 'い' output HDMI-A-1
-	workspace 'む' output HDMI-A-1
-	workspace 'な' output HDMI-A-1
-	workspace 'や' output HDMI-A-1
-	workspace 'こ' output HDMI-A-1
-	workspace 'と' output HDMI-A-1
+	workspace '壱' output HDMI-A-1
+	workspace '弐' output HDMI-A-1
+	workspace '参' output HDMI-A-1
+	workspace '四' output HDMI-A-1
+	workspace '五' output HDMI-A-1
+	workspace '六' output HDMI-A-1
+	workspace '七' output HDMI-A-1
+	workspace '八' output HDMI-A-1
+	workspace '九' output HDMI-A-1
+	workspace '拾' output HDMI-A-1
 
 	# Switch to workspace
-	bindsym $mod+1 workspace 'ひ'
-	bindsym $mod+2 workspace 'ふ'
-	bindsym $mod+3 workspace 'み'
-	bindsym $mod+4 workspace 'よ'
-	bindsym $mod+5 workspace 'い'
-	bindsym $mod+6 workspace 'む'
-	bindsym $mod+7 workspace 'な'
-	bindsym $mod+8 workspace 'や'
-	bindsym $mod+9 workspace 'こ'
-	bindsym $mod+0 workspace 'と'
+	bindsym $mod+1 workspace '壱'
+	bindsym $mod+2 workspace '弐'
+	bindsym $mod+3 workspace '参'
+	bindsym $mod+4 workspace '四'
+	bindsym $mod+5 workspace '五'
+	bindsym $mod+6 workspace '六'
+	bindsym $mod+7 workspace '七'
+	bindsym $mod+8 workspace '八'
+	bindsym $mod+9 workspace '九'
+	bindsym $mod+0 workspace '拾'
 
 	# Move focused container to workspace
-	bindsym $mod+Shift+1 move container to workspace 'ひ'
-	bindsym $mod+Shift+2 move container to workspace 'ふ'
-	bindsym $mod+Shift+3 move container to workspace 'み'
-	bindsym $mod+Shift+4 move container to workspace 'よ'
-	bindsym $mod+Shift+5 move container to workspace 'い'
-	bindsym $mod+Shift+6 move container to workspace 'む'
-	bindsym $mod+Shift+7 move container to workspace 'な'
-	bindsym $mod+Shift+8 move container to workspace 'や'
-	bindsym $mod+Shift+9 move container to workspace 'こ'
-	bindsym $mod+Shift+0 move container to workspace 'と'
+	bindsym $mod+Shift+1 move container to workspace '壱'
+	bindsym $mod+Shift+2 move container to workspace '弐'
+	bindsym $mod+Shift+3 move container to workspace '参'
+	bindsym $mod+Shift+4 move container to workspace '四'
+	bindsym $mod+Shift+5 move container to workspace '五'
+	bindsym $mod+Shift+6 move container to workspace '六'
+	bindsym $mod+Shift+7 move container to workspace '七'
+	bindsym $mod+Shift+8 move container to workspace '八'
+	bindsym $mod+Shift+9 move container to workspace '九'
+	bindsym $mod+Shift+0 move container to workspace '拾'
 
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
@@ -353,6 +360,7 @@ bindsym $mod+r mode "resize"
 bar {
     position top
 	status_command i3status-rs
+	font pango: Hiragino Kaku Gothic Pro 11
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %X'; do sleep 1; done

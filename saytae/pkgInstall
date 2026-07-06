@@ -2,8 +2,9 @@
 
 sudo pacman -S --needed \
     sway swaybg swaylock mako grim slurp swappy \
+	brightnessctl powerprofilectl upower \
     foot lsd bat jq ripgrep zip unzip fzf git bc termdown \
-    wofi ranger ncdu btop fastfetch neofetch \
+    wofi yazi pcmanfm ncdu btop fastfetch neofetch \
     fcitx5 fcitx5-hangul fcitx5-mozc \
     noto-fonts-cjk otf-font-awesome imv \
     mpv zathura zathura-pdf-mupdf meld \
@@ -14,3 +15,4 @@ sudo pacman -S --needed \
 sudo mv ./issue /etc
 sudo mv ./cls /usr/bin
 sudo mv ./jisin /usr/bin
+sudo mv ./autologin /etc/systemd/system/getty@tty1.service.d/override.conf
