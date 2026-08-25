@@ -1,16 +1,35 @@
 #!/bin/bash
 
-sudo pacman -S --needed \
-    sway swaybg swaylock mako grim slurp swappy \
-	brightnessctl powerprofilectl upower \
+# auto-login
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
+sudo mv ./autologin /etc/systemd/system/getty@tty1.service.d/override.conf
+sudo systemctl daemon-reload
+
+# yay
+sudo pacman -S --needed git base-devel
+cd ~/.config
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+# pakages
+sudo pacman -Syyu --needed \
+    sway swaybg swaylock mako grim slurp swappy kanshi \
+    brightnessctl upower \
     foot lsd bat jq ripgrep zip unzip fzf git bc termdown \
-    wofi yazi pcmanfm ncdu btop fastfetch neofetch \
+    wofi yazi pcmanfm ncdu btop fastfetch fastfetch \
     fcitx5 fcitx5-hangul fcitx5-mozc \
     noto-fonts-cjk otf-font-awesome imv \
-    mpv zathura zathura-pdf-mupdf meld \
+    firefox mpv zathura zathura-pdf-mupdf meld \
     neovim npm \
     pipewire pavucontrol bluez bluez-utils blueman openssh \
     i3status-rust wl-clipboard
+
+# sway-img
+git clone https://github.com/sayTae/sway-img.git
+sudo mkdir /usr/share/backgrounds/downloads
+sudo mv ./sway-img/* /usr/share/backgrounds/downloads
+rm -rf ./sway-img
 
 sudo mv ./issue /etc
 sudo mv ./cls /usr/bin

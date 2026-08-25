@@ -18,17 +18,17 @@ Name=Default
 # Layout
 Default Layout=us
 # Default Input Method
-DefaultIM=mozc
+DefaultIM=hangul
 
 [Groups/1/Items/0]
 # Name
-Name=keyboard-us
+Name=mozc
 # Layout
 Layout=
 
 [Groups/1/Items/1]
 # Name
-Name=mozc
+Name=hangul
 # Layout
 Layout=
 
