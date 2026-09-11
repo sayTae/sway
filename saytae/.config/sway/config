@@ -34,6 +34,18 @@ input "type:touchpad" {
 	pointer_accel 1
 }
 
+# Henkan
+bindsym --no-repeat Henkan exec busctl --user \
+call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetCurrentIM s "mozc"
+
+# Muhenkan
+bindsym --no-repeat Muhenkan exec busctl --user \
+call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetCurrentIM s "keyboard-jp"
+
+# Hiragana_Katakana
+bindsym --no-repeat Hiragana_Katakana exec busctl --user \
+call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetCurrentIM s "hangul"
+
 ### Variables
 
 # Mod key
@@ -51,17 +63,26 @@ set $right l
 # Terminal server
 exec foot --server
 
+# Terminal emulator
+set $term footclient
+
+#exec term
+exec $term
+
 #login
 exec $screenlock
 
-# Terminal emulator
-set $term footclient
+# Terminal
+# for_window [app_id="scratch_term"] floating enable, resize set 70 ppt 70 ppt, move position center, move scratchpad
+# exec sh -c "foot --server & until $term -a scratch_term; do :; done"
 
 # Web browser
 set $browser firefox
 
 # Application munu
-set $menu wofi --show
+# set $menu wofi --show
+# set $menu pkill wofi || wofi --show drun
+set $menu killall wofi || wofi --show drun
 
 # fcitx5
 exec --no-startup-id fcitx5 -d
@@ -105,10 +126,10 @@ client.focused #FFFFFF #FFFFFF #000000 #FF4500
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #
 # Set wallpaper
-set $wall0 /usr/share/backgrounds/downloads/kame.jpg
+set $wall0 /usr/share/backgrounds/downloads/uchuu.jpg
 set $wall1 /usr/share/backgrounds/downloads/jihanki.jpg
 set $wall2 /usr/share/backgrounds/downloads/windowLinux.jpg
-set $wall3 #121212
+set $wall3 #1B2A4A
 
 # Wallpaper mode
 bindsym $mod+Shift+w mode "wallpaper"
@@ -127,7 +148,8 @@ output * bg $wall1 fill
 # output HDMI-A-1 bg $wall5 solid_color
 
 # Screen lock (waylock)
-set $screenlock swaylock --image $wall0
+set $screenlock swaylock -c "1B2A4A"
+# set $screenlock swaylock --image $wall0
 
 ### Idle configuration
 #
@@ -166,7 +188,7 @@ bindswitch --locked lid:off \
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    bindsym Menu exec $menu
+    bindsym --no-repeat Menu exec $menu
 
 	# Take a screen
 	bindsym $mod+Shift+a exec $screenshot
@@ -176,7 +198,7 @@ bindswitch --locked lid:off \
 
 	# Screen locked
 	# Bindsym $mod+Backspace exec $screenlock
-	bindsym Pause exec $screenlock
+	bindsym $mod+Escape exec $screenlock
 
 	# Set volume
 	bindsym $mod+Asciicircum exec pactl set-sink-volume @DEFAULT_SINK@ +1%

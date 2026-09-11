@@ -1,4 +1,6 @@
 [Hotkey]
+# 入力メソッドの切り替え
+TriggerKeys=
 # トグルキーの修飾キーを押し続けたときは列挙
 EnumerateWithTriggerKeys=True
 # 入力メソッドを有効にする
@@ -19,9 +21,6 @@ EnumerateGroupForwardKeys=
 EnumerateGroupBackwardKeys=
 # 修飾キーのショートカットをトリガーするための時間制限（ミリ秒）
 ModifierOnlyKeyTimeout=250
-
-[Hotkey/TriggerKeys]
-0=Hiragana_Katakana
 
 [Hotkey/PrevPage]
 0=Up
