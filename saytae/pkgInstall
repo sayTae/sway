@@ -15,7 +15,7 @@ makepkg -si
 # pakages
 sudo pacman -Syyu --needed \
     sway swaybg swaylock mako grim slurp swappy kanshi \
-    brightnessctl upower \
+    brightnessctl ddcutil upower \
     foot lsd bat jq ripgrep zip unzip fzf git bc termdown \
     wofi yazi pcmanfm ncdu btop fastfetch fastfetch \
     fcitx5 fcitx5-hangul fcitx5-mozc \
@@ -34,4 +34,7 @@ rm -rf ./sway-img
 sudo mv ./issue /etc
 sudo mv ./cls /usr/bin
 sudo mv ./jisin /usr/bin
+sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
 sudo mv ./autologin /etc/systemd/system/getty@tty1.service.d/override.conf
+grep -h "^image/" /usr/share/mime/globs 2>/dev/null | cut -d: -f1 | sort -u | while read -r mime; do xdg-mime default imv.desktop "$mime"; done
+grep -h "^video/" /usr/share/mime/globs 2>/dev/null | cut -d: -f1 | sort -u | while read -r mime; do xdg-mime default mpv.desktop "$mime"; done

@@ -3,7 +3,35 @@ profile laptop {
     output eDP-1 enable scale 1
 }
 
-profile monitor {
+profile monitor_desk {
     output eDP-1 disable
-    output * enable scale 2
+    output "Dell Inc. DELL P1917S 47JDW7B706WB" enable scale 1
+}
+
+profile monitor_hdmi_1 {
+    output eDP-1 enable scale 1 position 0,0
+    output HDMI-A-1 enable scale 1 position 7000,7000
+
+	exec swaymsg "output HDMI-A-1 bg #204A87 solid_color, focus output HDMI-A-1, workspace 外, focus output eDP-1"
+}
+
+profile monitor_hdmi_2 {
+    output eDP-1 enable scale 1 position 0,0
+    output HDMI-A-2 enable scale 1 position 7000,7000
+
+	exec swaymsg "output HDMI-A-2 bg #204A87 solid_color, focus output HDMI-A-2, workspace 外, focus output eDP-1"
+}
+
+profile monitor_dp_1 {
+    output eDP-1 enable scale 1 position 0,0
+    output DP-1 enable scale 1 position 7000,7000
+
+	exec swaymsg "output DP-1 bg #204A87 solid_color, focus output DP-1, workspace 外, focus output eDP-1"
+}
+
+profile monitor_dp_2 {
+    output eDP-1 enable scale 1 position 0,0
+    output DP-2 enable scale 1 position 7000,7000
+
+	exec swaymsg "output DP-2 bg #204A87 solid_color, focus output DP-2, workspace 外, focus output eDP-1"
 }

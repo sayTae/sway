@@ -72,16 +72,11 @@ exec $term
 #login
 exec $screenlock
 
-# Terminal
-# for_window [app_id="scratch_term"] floating enable, resize set 70 ppt 70 ppt, move position center, move scratchpad
-# exec sh -c "foot --server & until $term -a scratch_term; do :; done"
-
 # Web browser
 set $browser firefox
 
 # Application munu
 # set $menu wofi --show
-# set $menu pkill wofi || wofi --show drun
 set $menu killall wofi || wofi --show drun
 
 # fcitx5
@@ -115,7 +110,7 @@ for_window [app_id="anki"] floating enable
 # for_window [app_id="foot"] floating enable
 
 ### Output configuration
-exec kanshi
+exec_always --no-startup-id "killall kanshi; kanshi"
 
 # Startup workspace
 exec swaymsg workspace '壱'
@@ -126,10 +121,9 @@ client.focused #FFFFFF #FFFFFF #000000 #FF4500
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #
 # Set wallpaper
-set $wall0 /usr/share/backgrounds/downloads/uchuu.jpg
+set $wall0 #204A87
 set $wall1 /usr/share/backgrounds/downloads/jihanki.jpg
 set $wall2 /usr/share/backgrounds/downloads/windowLinux.jpg
-set $wall3 #1B2A4A
 
 # Wallpaper mode
 bindsym $mod+Shift+w mode "wallpaper"
@@ -145,6 +139,8 @@ mode "wallpaper" {
 }
 
 output * bg $wall1 fill
+# output $monitor bg $wall0 solid_color
+
 # output HDMI-A-1 bg $wall5 solid_color
 
 # Screen lock (waylock)
@@ -201,16 +197,16 @@ bindswitch --locked lid:off \
 	bindsym $mod+Escape exec $screenlock
 
 	# Set volume
-	bindsym $mod+Asciicircum exec pactl set-sink-volume @DEFAULT_SINK@ +1%
-	bindsym $mod+Minus exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-	bindsym $mod+Backslash exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+	bindsym $mod+Asciicircum exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+	bindsym $mod+Backslash exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+	bindsym $mod+Minus exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 	bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
 	bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 	bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 	# Set Monitor brightness
-	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
-	bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+	bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+	bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 	# Start sceen lock
 	# bindsym $mod+m swaylock --color 000000
@@ -255,16 +251,16 @@ bindswitch --locked lid:off \
 # Workspaces:
 #
 	# Workspace setting
-	workspace '壱' output HDMI-A-1
-	workspace '弐' output HDMI-A-1
-	workspace '参' output HDMI-A-1
-	workspace '四' output HDMI-A-1
-	workspace '五' output HDMI-A-1
-	workspace '六' output HDMI-A-1
-	workspace '七' output HDMI-A-1
-	workspace '八' output HDMI-A-1
-	workspace '九' output HDMI-A-1
-	workspace '拾' output HDMI-A-1
+	workspace '壱' output eDP-1
+	workspace '弐' output eDP-1
+	workspace '参' output eDP-1
+	workspace '四' output eDP-1
+	workspace '五' output eDP-1
+	workspace '六' output eDP-1
+	workspace '七' output eDP-1
+	workspace '八' output eDP-1
+	workspace '九' output eDP-1
+	workspace '外' output HDMI-A-1 DP-1 DP-2
 
 	# Switch to workspace
 	bindsym $mod+1 workspace '壱'
@@ -276,7 +272,7 @@ bindswitch --locked lid:off \
 	bindsym $mod+7 workspace '七'
 	bindsym $mod+8 workspace '八'
 	bindsym $mod+9 workspace '九'
-	bindsym $mod+0 workspace '拾'
+	bindsym $mod+0 workspace '外'
 
 	# Move focused container to workspace
 	bindsym $mod+Shift+1 move container to workspace '壱'
@@ -288,7 +284,7 @@ bindswitch --locked lid:off \
 	bindsym $mod+Shift+7 move container to workspace '七'
 	bindsym $mod+Shift+8 move container to workspace '八'
 	bindsym $mod+Shift+9 move container to workspace '九'
-	bindsym $mod+Shift+0 move container to workspace '拾'
+	bindsym $mod+Shift+0 move container to workspace '外'
 
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
